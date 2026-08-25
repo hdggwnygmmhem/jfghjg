@@ -1,0 +1,26 @@
+{
+  "name": "MINI-BOT-X",
+  "description": "WhatsApp Bot with MongoDB and Pair Code UI",
+  "repository": "https://github.com/your-username/your-repo",
+  "logo": "https://i.imgur.com/8Qp49X0.jpeg",
+  "keywords": ["whatsapp", "baileys", "bot", "mongodb"],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    }
+  ],
+  "env": {
+    "MONGODB_URI": {
+      "description": "Apni MongoDB Atlas URI daalein",
+      "required": true
+    },
+    "WORK_TYPE": {
+      "description": "Bot mode: public ya private",
+      "value": "public",
+      "required": false
+    }
+  }
+}
