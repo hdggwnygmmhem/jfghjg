@@ -1,0 +1,54 @@
+{
+  "name": "ultra-mini-bot",
+  "version": "2.0.0",
+  "description": "Powerful, feature-rich multi-device WhatsApp Mini Bot with full ESM module support",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "whatsapp-bot",
+    "baileys",
+    "esm",
+    "whatsapp-mini-bot",
+    "multi-device"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc14",
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "node-webpmux": "^3.1.7",
+    "canvas": "^2.11.2",
+    "jimp": "^0.22.12",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "axios": "^1.7.2",
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0-rc.12",
+    "file-type": "^19.0.0",
+    "mime-types": "^2.1.35",
+    "form-data": "^4.0.0",
+    "pino": "^9.0.0",
+    "chalk": "^5.3.0",
+    "moment-timezone": "^0.5.45",
+    "human-readable": "^0.2.1",
+    "@sparticuz/chromium": "^123.0.1",
+    "puppeteer-core": "^22.6.0",
+    "qrcode-terminal": "^0.12.0",
+    "qrcode": "^1.5.3",
+    "lowdb": "^7.0.1",
+    "mongoose": "^8.3.1",
+    "@keyv/sqlite": "^3.6.6",
+    "keyv": "^4.5.4",
+    "semver": "^7.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
+
+
