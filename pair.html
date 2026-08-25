@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINI-BOT-X | Pairing Web UI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            color: #38bdf8;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(15, 23, 42, 0.6);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #0284c7;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+        }
+
+        .code-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(2, 132, 199, 0.1);
+            border: 1px dashed #0284c7;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .code-box span {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .code-display {
+            font-size: 1.6rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #4ade80;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-robot"></i> MINI-BOT-X</h2>
+        <p>Enter your WhatsApp Number with country code</p>
+
+        <div class="input-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" placeholder="e.g. 923000000000" required>
+        </div>
+
+        <button id="get-code-btn" onclick="getCode()">
+            <i class="fa-solid fa-key"></i> Get Pairing Code
+        </button>
+
+        <div class="code-box" id="code-container">
+            <span>Your Pairing Code (Click to Copy):</span>
+            <div class="code-display" id="pairing-code" onclick="copyCode()">------</div>
+        </div>
+
+        <div class="footer">
+            Powered by Baileys & MongoDB State
+        </div>
+    </div>
+
+    <script>
+        async function getCode() {
+            const phoneInput = document.getElementById('phone').value.trim();
+            const btn = document.getElementById('get-code-btn');
+            const codeContainer = document.getElementById('code-container');
+            const codeDisplay = document.getElementById('pairing-code');
+
+            if (!phoneInput) {
+                alert('Please enter a valid phone number with country code!');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
+            codeContainer.style.display = 'none';
+
+            try {
+                const response = await fetch(`/pair?number=${encodeURIComponent(phoneInput)}`);
+                const data = await response.json();
+
+                if (data.code) {
+                    codeDisplay.innerText = data.code;
+                    codeContainer.style.display = 'block';
+                } else if (data.message) {
+                    alert(data.message);
+                } else {
+                    alert(data.error || 'Failed to get code. Try again.');
+                }
+            } catch (err) {
+                alert('Connection error! Make sure server index.js is running.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-key"></i> Get Pairing Code';
+            }
+        }
+
+        function copyCode() {
+            const codeText = document.getElementById('pairing-code').innerText;
+            if (codeText && codeText !== '------') {
+                navigator.clipboard.writeText(codeText);
+                alert('Pairing Code Copied: ' + codeText);
+            }
+        }
+    </script>
+</body>
+</html>
